@@ -51,9 +51,18 @@ namespace LinkListExample {
     traverse() {
       let current = this.head;
       while (current != null) {
-        console.log(current.data);
         current = current.next;
       }
+    }
+
+    middle() {
+      let current = this.head,
+        fastCurrent = this.head?.next;
+      while(fastCurrent) {
+        current = current?.next || null;
+        fastCurrent = current?.next?.next;
+      }
+      return current?.data;
     }
   }
 
@@ -66,6 +75,15 @@ namespace LinkListExample {
     linkedList.traverse();
   }
 
+  function findMiddle(numbers: Array<number>) {
+    const linkedList = new LinkedList();
+    numbers.forEach((number) => {
+      linkedList.append(number);
+    });
+    const middle = linkedList.middle()
+    console.log({ middle })
+  }
+
   // solve([1,2,3], 3)
   console.log(`[8,1,1,4,12], 1`);
   solve([8, 1, 1, 4, 12], 1); //8->1->1->4->12->null, value = 1, return 8->4->12->null
@@ -73,4 +91,13 @@ namespace LinkListExample {
   solve([7, 12, 2, 9], 7); // 7->12->2->9->null, value = 7, return 12->2->9->null
   console.log(`[7,12,2,9], 1`);
   solve([7, 12, 2, 9], 1); // 7->12->2->9->null, value = 7, return 7->12->2->9->null
+
+  /**
+   * 1->2->3->null, return 2
+      1->2->3->4->null, return 3
+      1->null, return 1
+   */
+  findMiddle([1,2,3]); // 2
+  findMiddle([1,2,3,4]); // 3
+  findMiddle([1]); // 1
 }
